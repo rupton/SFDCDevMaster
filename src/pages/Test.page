@@ -1,0 +1,21 @@
+<apex:page standardController="Event__c" recordSetVar="events" >
+    <apex:pageBlock >
+        <apex:form > 
+    	<apex:pageBlockSection >
+        	<apex:dataTable value="{!events}" var="event">
+            	<apex:column value="{!event.Name}" headerValue="Name"/>
+                <apex:column value="{!event.EventDateTime__c}" headerValue="Date and Time"/>
+             	<apex:column headerValue="Room">
+                	<apex:inputField value="{! event.Room__c}"/>
+                </apex:column>
+          		<apex:column headerValue="Venue">
+               		<apex:inputField value="{! event.Venue__c}"/>
+                </apex:column>
+                <apex:column >
+               	 <apex:commandButton value="save" action="{!quicksave}"/>
+                </apex:column>
+              </apex:dataTable>
+        </apex:pageBlockSection>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

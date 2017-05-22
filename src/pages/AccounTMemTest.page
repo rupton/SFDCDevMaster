@@ -1,0 +1,4 @@
+<apex:page standardcontroller="Account" >
+    <apex:detail relatedList="true"/>
+    {! account.AccountTeamMembers}
+</apex:page>

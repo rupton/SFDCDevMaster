@@ -1,0 +1,10 @@
+<apex:page standardcontroller="Account" extensions="RenderTest">
+    <apex:form >
+        <label for="labelText">Input annual revenue</label>
+      	<apex:inputText id="labelText" value="{!value}"/>
+        <apex:commandButton action="{!testVal}" value="Submit Revenue"/>
+    </apex:form> 
+    <apex:pageBlock id="rederSwitch">
+    	<apex:pageBlockSection rendered="{!checkMe}">A big account was found</apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

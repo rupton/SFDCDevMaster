@@ -1,0 +1,128 @@
+<apex:page controller="ViperController">
+<html ng-app='phonecatApp'  ng-controller='PhoneListCtrl'>
+<head>
+  <title>Object Creator</title>
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+    <script src="../../soap/ajax/33.0/connection.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+    sforce.connection.sessionId = "{!$Api.Session_ID}";
+    function createObject(jsonVal){
+    	if(typeof jsonVal === 'undefined'){
+           $("#response").append("You must provide a valid json object to create a new Viper object"); 
+        }else{
+        Visualforce.remoting.Manager.invokeAction('ViperController.createNewObject',jsonVal, function(result, event){
+          if(event.status){
+              $("#response").append(result);
+              var viper = new sforce.SObject("Viper__c");
+              var returnVals = result.vals;
+              //viper.Lookup_Key__c = result.Id;
+              console.log(returnVals);
+              var res = sforce.connection.create([viper]);
+              if(res[0].getBoolean("success")){
+              	console.log("New viper object created with id " + res[0].id);
+              }
+          }         
+         });
+        }
+    }                                           
+    var phonecatApp = angular.module('phonecatApp',[]);
+    phonecatApp.controller('PhoneListCtrl', function($scope, $http){
+		$scope.orderProp = 'name';
+		$scope.index = 0;
+		$scope.rows = 0;
+		$scope.cols = 0;
+		$scope.jsonString = '';
+		$scope.objName = 'None';
+		$scope.objType = 'None';
+		$scope.rowArray = [];
+		$scope.labelArray= []; 
+		$scope.range = function(start, end, type){
+			var rangeVals = [];
+			for(var i = start; i <= end; i++){
+				rangeVals.push(i);
+			}
+			if(type === 'rows'){
+				$scope.rows = end;
+			}
+			return rangeVals;
+		}
+
+		$scope.clearVals = function(){
+			$scope.rows = 0;
+			$scope.cols = 0;
+			$scope.rowArray =[];
+            $scope.jsonString = '';
+		}
+
+		$scope.buildArray = function(){
+			console.log("Building Array");
+			var tobuild = $scope.rows;
+			$scope.rowArray = [];
+			for(var i = 0; i < tobuild; i++){
+				$scope.rowArray[i] = new Array();
+			}
+		}
+		$scope.buildJson = function(){
+			$scope.jsonString = "{";
+			$scope.jsonString = $scope.jsonString + JSON.stringify("Object") + ":" + JSON.stringify($scope.objName) + ",";
+			$scope.jsonString = $scope.jsonString + JSON.stringify("vals") + ":" + "[";
+			//unwind the array for the JSON body of response
+			var colLength = $scope.labelArray.length;
+			for(var i = 0; i < $scope.rowArray.length; i++){
+				console.log("Unwinding array" + i);
+				currArray = $scope.rowArray[i];
+				console.log("This nested array has " + currArray.length + ' elements');
+				$scope.jsonString = $scope.jsonString + "{";
+				//unwind nested array and create JSON
+				for(var j = 0; j < currArray.length; j++){
+					console.log('Processing element J +1 of ' + currArray.length);
+					console.log("\t" + $scope.labelArray[j] +currArray[j]);					
+					if(j === (currArray.length -1)){						
+						$scope.jsonString = $scope.jsonString + JSON.stringify($scope.labelArray[j]) + ":" + JSON.stringify(currArray[j]);
+						console.log('this is the end of nested');
+					}else{
+						$scope.jsonString = $scope.jsonString + JSON.stringify($scope.labelArray[j]) + ":" + JSON.stringify(currArray[j]) +",";
+					}
+				}				
+				if(i === ($scope.rowArray.length -1)){
+					console.log('this is the end of outer');
+					$scope.jsonString = $scope.jsonString + "}";
+				}else{
+					$scope.jsonString = $scope.jsonString + "},";
+				}
+			}
+			$scope.jsonString = $scope.jsonString + "]";
+			$scope.jsonString = $scope.jsonString + "}";
+            createObject($scope.jsonString);
+		}
+    });
+    </script>
+</head>
+<body>
+	<div>What is the table/object Name? <input type="text" ng-model="objName"/></div>
+    <br/><div>What is the table/object Type? <input type="text" ng-model="objType"/></div><br/><br/>
+
+<div>How many columns would you like? <input type="text" ng-model="cols"/>
+How many rows would you like? <input type="text" ng-model="rows" ng-change="buildArray()"/>
+    </div><br/><br/>
+<table id="ObjectTable">
+	<tr>
+        <td ng-repeat="col in range(0,cols -1)"><input ng-model="labelArray[col]" type="text" value="Column Name"/></td>
+	</tr>
+	<tr ng-repeat="row in range(0,rows -1, rows)">
+        <td ng-repeat="col in range(0,cols -1)"><input ng-model="rowArray[row][col]" type="text" value="Data Value"/></td>
+	</tr>
+</table>
+<button ng-click="clearVals()" ng-if="cols != 0 && rows != 0 ">Clear Table</button>
+    <br/><br/>
+<button ng-click="buildJson()" ng-if="cols != 0 && rows != 0 ">Create new Viper object</button>
+    <br/><br/>
+
+    <div id="response"></div>
+        
+</body>
+</html>
+</apex:page>

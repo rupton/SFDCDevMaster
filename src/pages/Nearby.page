@@ -1,0 +1,32 @@
+<apex:page controller="VolunteerNearby" docType="html-5.0" showHeader="false">
+
+
+
+
+    <!-- <c:Style /> -->
+    
+    <c:Map message="Locating Cases">
+     onMapInitialized: function(position, address, city) {
+             Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.VolunteerNearby.findNearby}',
+                city, 
+                function(results, event) {
+                    if (event.status) {
+                        mapInterface.addMarkers(results, "Id", "Name", "Address__c");
+                    }
+                }, 
+                {escape: true} 
+            );
+        },
+        
+        onMapItemSelected: function(id) {
+            if((typeof sforce != 'undefined')) {
+                // Salesforce1 navigation
+                sforce.one.navigateToSObject(id);
+            }else{
+        		window.location.href = '{!URLFOR($Action.Volunteer_Opportunity__c.View,' +  id + ')}'
+            }
+        }
+
+  
+     </c:Map>
+</apex:page>

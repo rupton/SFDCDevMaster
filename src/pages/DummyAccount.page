@@ -1,0 +1,5 @@
+<apex:page StandardController="Account">
+    <apex:detail relatedlist="false"/>
+    
+    <h1>My custom stuff here</h1>
+</apex:page>

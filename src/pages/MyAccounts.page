@@ -1,0 +1,3 @@
+<apex:page standardController="account" sidebar="false" showheader="false" standardstylesheets="false">
+   <apex:detail />
+</apex:page>

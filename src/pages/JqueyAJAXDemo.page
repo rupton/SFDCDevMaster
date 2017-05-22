@@ -1,0 +1,17 @@
+<apex:page >
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+    <script type='text/javascript'>
+   		jQuery(
+        	function(){
+            	jQuery.ajax({
+                    url:'http://fathomless-lake-8157.herokuapp.com/Contact/',
+                    type: "get",
+                    dataType: 'html',
+                    error: function(){console.log('Error making call out');},
+                	success: function(){console.log('Succes in making call out');},
+                 });
+            }
+        );     
+       
+   </script>
+</apex:page>

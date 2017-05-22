@@ -1,0 +1,18 @@
+<apex:page standardcontroller="Account" recordsetvar="accounts" renderas="pdf">
+    <apex:form >
+        <apex:pageBlock >
+        	<apex:pageBlockTable value="{!accounts}" var="account">
+            	<apex:column >
+                <apex:inputField value="{!account.name}"/>
+                </apex:column>
+                <apex:column >
+                <apex:inputField value="{!account.annualrevenue}"/>
+                </apex:column>
+                <apex:column >
+                <apex:commandButton value="Save Record" action="{!quicksave}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:commandButton action="{!URLFor($Action.Account.New)}" value="Create"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

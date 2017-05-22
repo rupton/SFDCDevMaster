@@ -1,0 +1,11 @@
+<apex:page standardcontroller="Merchandise__c" recordsetvar="merch">
+    <apex:form >
+    	<apex:pageBlock >
+        <apex:pageBlockSection >
+        	<apex:pageBlockTable value="{!merch}" var="item">
+            	<apex:outputField value="{!item.Name}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page showHeader="true" sidebar="true" docType="html-5.0">
+	You should really test your variables now	
+	Let's see if an avatar will work
+	<div class="sg-icon-art center icon--groups" title="Groups"></div>
+</apex:page>

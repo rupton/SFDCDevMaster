@@ -1,0 +1,82 @@
+<apex:page standardController="Opportunity" extensions="jquery_minhack">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+    <style>
+	#myTitle {
+		font-size:20px;
+		text-align: center;
+
+	}
+
+	.element {
+		width:50%;
+		float:left;
+	}
+
+	.droppableArea {
+		height:200px;
+		background: #CCC;
+		font-weight:bold;
+	}
+</style>
+    <script type="text/javascript">
+       $j = jQuery.noConflict(); 
+    	$j(function(){
+        	$j("#draggableZone").draggable();
+        
+        }
+        );
+    </script>
+<apex:detail subject="{!theOpp.Id}" relatedList="true"/>
+<apex:form >
+	<h1 id="myTitle">Drag and Drop Products: Mini-Hack</h1>
+
+	<div style="width:100%;">
+		<div class="element">
+			<apex:pageBlock >
+				<apex:pageBlockButtons >
+					<apex:commandButton value="Select" action="{!addProduct}" rerender="addProductsSection"/>
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockTable var="p" value="{!allProducts}">
+                    <div id="draggableZone"> 
+                    <apex:column headerValue="Select" >
+						<apex:inputCheckbox value="{!p.selected}" />
+					</apex:column>
+                    <apex:column value="{!p.prod.Name}"/>
+                    <apex:column value="{!p.prod.Product2.ProductCode}" />
+                    </div>
+                 </apex:pageBlockTable> 
+			</apex:pageBlock>
+		</div>
+
+		<div class="element droppableArea" >
+			ADD DROPPABLE AREA HERE
+		</div>
+
+		<div class="element">
+			<apex:outputPanel id="addProductsSection">
+				<apex:outputPanel rendered="{!showResults}">
+					<apex:pageBlock >
+						<apex:pageBlockButtons >
+							<apex:commandButton value="Add" action="{!createLineItems}" />
+						</apex:pageBlockButtons>
+						<apex:pageBlockTable var="p" value="{!selectedProducts}">
+
+                            <apex:column headerValue="Product Name" >
+								<apex:outputField value="{!p.prod.Name}" />
+							</apex:column>
+							<apex:column headerValue="Quantity">
+								<apex:inputText value="{!p.Quantity}" />
+							</apex:column>
+							<apex:column headerValue="Sales Price">
+								<apex:inputText value="{!p.SalesPrice}" />
+							</apex:column>
+                          </apex:pageBlockTable> 
+					</apex:pageBlock>
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</div>
+	</div>
+</apex:form>
+</apex:page>

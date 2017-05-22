@@ -1,0 +1,20 @@
+<apex:page standardController="Account" recordSetVar="accounts">
+    <apex:form >
+    	<apex:pageBlock >
+          <apex:pageBlockTable value="{!accounts}" var="account">
+        		<apex:column >
+                 	<apex:facet name="Header">Account Name:</apex:facet> 
+                    <apex:inputField value="{!account.Name}"/>
+               </apex:column>
+              <apex:column >
+                 	<apex:facet name="Header">Annual Revenue:</apex:facet> 
+                  <apex:inputField value="{!account.annualrevenue}"/>
+               </apex:column>
+              <apex:column >
+                    <apex:commandButton action="{!quicksave}"  value="Update Account"/>
+               </apex:column>
+          </apex:pageBlockTable>
+            <apex:commandButton action="{!URLFor($Action.Account.New)}" value="Create New Account"/>
+       		 </apex:pageBlock>
+    </apex:form>
+</apex:page>

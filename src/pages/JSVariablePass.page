@@ -1,0 +1,14 @@
+<apex:page controller="A" >
+    <apex:form >
+    	<apex:actionFunction action="{! setVariable}" name="assignVariable" rerender="showValue">
+            <apex:param name="myParam" assignTo="{!s}" value=""/>
+    	</apex:actionFunction>
+    </apex:form>
+    
+    <!-- test the call -->
+    <apex:outputPanel onClick="assignVariable('My Value')" styleClass="btn">
+    	Click Me 
+    </apex:outputPanel>
+    <!-- show result of call -->
+    <apex:outputText id="showValue" value="{!s}"/>
+</apex:page>

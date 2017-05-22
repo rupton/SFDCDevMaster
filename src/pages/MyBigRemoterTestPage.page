@@ -1,0 +1,25 @@
+<apex:page controller="MyBigRemoter">
+    <script type="text/javascript">
+    
+    	function sayHello(helloTo){
+         alert("remoting");
+            Visualforce.remoting.Manager.invokeAction('{! $RemoteAction.MyBigRemoter.sayHello}', helloTo,
+                                                   function(result, event){
+                                                       if(event.status){
+                                                       		document.getElementById('results').innerHTML = result;
+                                                           console.log(result);
+                                                       }else{
+                                                           console.log(status);
+                                                           }
+                                                    });
+                                                       
+    	}
+    </script>
+    
+    <button onclick='sayHello("Ryan");'>
+        Say Hello
+    </button>
+    <div id="results">
+      [results]
+    </div>
+</apex:page>

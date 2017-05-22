@@ -1,0 +1,23 @@
+<apex:page >
+
+  <c:importvisualstrap theme="flatly"/>
+  <c:visualstrapblock >
+  <c:jumbotron >
+      <h2>Hello, World</h2>
+      <p>Here are some examples of things you can do with Visualstrap</p>
+  </c:jumbotron>
+  <c:panel title="Primary Panel" type="Primary">Something</c:panel>
+  
+  <c:column type="col-md-4">
+      <c:thumbnail ><apex:image value="http://placehold.it/550x350&text=My+Image"/></c:thumbnail>
+  </c:column>
+  <c:column type="col-md-4">
+      <c:thumbnail ><apex:image value="http://placehold.it/550x350&text=My+Image"/></c:thumbnail>
+  </c:column>
+  <c:column type="col-md-4">
+      <c:thumbnail ><apex:image value="http://placehold.it/550x350&text=My+Image"/></c:thumbnail>
+  </c:column>
+
+  </c:visualstrapblock>
+  
+</apex:page>

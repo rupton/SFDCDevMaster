@@ -1,0 +1,5 @@
+<apex:page docType="html-5.0" showHeader="false" sidebar="false">
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+    <a href="tel:+15408503106">Call me</a>
+</apex:page>

@@ -1,0 +1,19 @@
+<apex:page Controller="AjaxDemo">
+<apex:pageBlock Title="Ajax Sample">
+Hello <b> {!$User.FirstName}</b>.
+<apex:form >
+<br /><br />
+<apex:commandbutton action="{!setCurrTime}" rerender="container" value="Display Current Time" />
+<apex:commandbutton action="{!setRecords}" rerender="container" value="Add record" />
+</apex:form>
+</apex:pageBlock>
+<apex:outputPanel id="container">
+<apex:pageBlock title="AjaxData"  rendered="{!records > 0}">
+  <apex:outputPanel id="ajaxresult" layout="block">
+      Result: {!CurrTime}<br/>
+      Record count: {!records}
+  </apex:outputPanel>
+
+</apex:pageBlock>
+</apex:outputPanel>
+</apex:page>

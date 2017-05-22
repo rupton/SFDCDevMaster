@@ -1,0 +1,27 @@
+<apex:page controller="ViperController">
+    <apex:pageBlock title="Viper Configuration">
+    	<apex:form >
+            <apex:pageBlock >
+			 <apex:pageBlockSection >
+            <apex:inputField value="{!viperObj.name}"/><br/>
+        	<apex:inputField value="{!viperField.name}"/>
+            <apex:inputText value="{!viperField.Field_Value__c}"/>
+            <apex:commandButton value="Add field" action="{!addField}" reRender="theList" />
+            <apex:commandButton value="Create Object" action="{!createObject}"/>
+     </apex:pageBlockSection>
+                </apex:pageBlock>
+        </apex:form>
+
+        <apex:pageBlock >
+           <apex:outputPanel id="theList">
+               {!records}
+            <apex:repeat value="{!addedFields}" var="field" >
+            	{!field.name}&nbsp;{!field.field_value__c}
+            </apex:repeat>
+          </apex:outputPanel>
+        </apex:pageBlock>
+
+
+    </apex:pageBlock>
+    
+</apex:page>

@@ -1,0 +1,2 @@
+<apex:page StandardController="Account" recordSetVar="Accounts" contentType="text/xml" showHeader="false" sidebar="false" cache="false">
+</apex:page>

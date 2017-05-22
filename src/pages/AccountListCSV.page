@@ -1,0 +1,7 @@
+<apex:page standardController="Account" cache="true" recordSetVar="accounts" showheader="false" sidebar="false" contentType="text/csv#annualrevenue.csv">
+         
+    <apex:repeat value="{!accounts}" var="account">
+        {!account.Name},{!account.AnnualRevenue},
+    </apex:repeat>
+
+</apex:page>

@@ -1,0 +1,14 @@
+<apex:page controller="VFRemotingTest">
+    <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        j$ = jQuery.noConflict();
+        var v;            
+    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.VFRemotingTest.getAssetExpand}',
+                "Hello World",insertDiv);
+    			function insertDiv(result, event){
+                    v = j$.parseJSON(result);
+                 }
+    </script>
+    
+    <p>Check the value = v</p>
+</apex:page>

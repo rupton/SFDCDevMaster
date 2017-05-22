@@ -1,0 +1,88 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" standardController="Review__c">
+ <head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, 
+                                  minimum-scale=1, maximum-scale=1, user-scalable=no"/> 
+      <apex:stylesheet value="{!URLFOR($Resource.Mobile_Design_Templates, 
+                'common/css/app.min.css')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.Mobile_Design_Templates, 
+                'common/js/jQuery2.0.2.min.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.Mobile_Design_Templates, 
+                'common/js/jquery.touchwipe.min.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.Mobile_Design_Templates, 
+                'common/js/main.min.js')}"/>
+      <style>
+          #container{
+              margin-left: 10px;
+              margin-right: 10px;
+          
+          }
+          #main{
+            background-color: #24a830;
+            border: 2px solid #999999;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            background-image: -moz-linear-gradient(top, #1aff1a, #0e7328);
+            background-image: -ms-linear-gradient(top, #1aff1a, #0e7328);
+            background-image: -webkit-gradient(linear, center top, center bottom, from(#1aff1a), to(#0e7328));
+            background-image: -webkit-linear-gradient(top, #1aff1a, #0e7328);
+            background-image: linear-gradient(top, #1aff1a, #0e7328);
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            color: black;
+            vertical-align: middle;
+/*Use "background-clip: padding-box" when using rounded corners to avoid the gradient bleeding through the corners*/
+/*--IE9 DOES NOT SUPPORT CSS3 GRADIENT BACKGROUNDS--*/
+}
+         #poster{
+             margin-top: 20px 
+         }
+         #title{
+             margin-top: 5px;
+             margin-bottom: 5px;
+             text-align: center;
+             text-spacing: 5px;
+             font-weight:bold;
+             font-size: 16pt;
+         }
+         #poster{
+             align: center;
+         }
+      </style>          
+     <script>
+         
+         var apikey = "98ptqwrqujdujarc92ztzsju";
+         var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+         var movieSearchUrl = baseUrl+"/movies.json?apikey=" + apikey;
+         var query = "{! Review__c.Name}";
+         var results;
+         
+         $(document).ready(function(){
+             //send the query
+             $.ajax({
+                 url: movieSearchUrl + "&q=" + encodeURI(query),
+                 dataType: "jsonp",
+                 success: searchCallback
+             });
+         });
+         
+         function searchCallback(data){
+             console.log('Found ' + data.total + ' results for ' + query);
+             $('#critics_comment').append("Critics Rating " + data.movies[0].ratings.critics_rating +"</br>");
+             $('#critics_comment').append("Critics Score " + data.movies[0].ratings.critics_score +"</br>");
+             $('#critics_comment').append(data.movies[0].critics_consensus);
+             
+             results = data;
+             $('#title').append(data.movies[0].title);
+             $('#poster').append('<img src="' + data.movies[0].posters.detailed + '"/>');
+         }
+     </script>
+   </head>
+
+       <div id="main"><img src="http://news.cnet.com/i/bto/20100104/Rotten_Tomatoes_Logo.png"/> </div>
+   <div id="container">
+      <div id="title"></div>
+      <div id="critics_comment"><span class="headings">Critics Consensus:</span> </div>
+      <div id="poster"></div>
+  </div>
+</apex:page>

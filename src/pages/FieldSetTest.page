@@ -1,0 +1,28 @@
+<apex:page standardController="Account" extensions="fieldSetExtension">
+
+
+ <apex:form >
+  <apex:pageBlock >
+     Enter Account Id:
+   <apex:pageBlockSection >
+        <apex:pageBlockSectionItem >
+        <apex:inputText value="{!ContactForAcc.AccountId}" />
+        <apex:commandbutton value="Submit" action="{!redirectUser}"/>
+        </apex:pageBlockSectionItem>
+   </apex:pageBlockSection>
+     
+ 
+   <apex:pageBlockSection columns="1" id="contactTable" title="Contats Details">
+        <apex:pageBlockTable value="{!lstCon}" var="con">
+        <apex:repeat value="{!$ObjectType.Contact.FieldSets.properNames}" var="f">
+        <apex:column value="{!con[f]}"/>
+        </apex:repeat>
+        </apex:pageBlockTable>
+   </apex:pageBlockSection>
+   
+   </apex:pageBlock>
+   
+ </apex:form>
+ 
+ 
+</apex:page>
